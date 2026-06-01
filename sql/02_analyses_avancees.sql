@@ -97,3 +97,16 @@ SELECT
     ROUND(((s.ca_moyen - g.ca_global_moyen) * 100.0 / g.ca_global_moyen)::numeric, 2) AS lift_vs_moyenne_pct
 FROM stats s, global g
 ORDER BY s.ca_moyen DESC;
+
+-- 5. Impact des semaines fériées vs normales
+SELECT
+    d.holidaylabel,
+    COUNT(*) AS nb_semaines,
+    ROUND(SUM(f.weeklysalesclean)::numeric, 0) AS ca_total,
+    ROUND(AVG(f.weeklysalesclean)::numeric, 2) AS ca_moyen,
+    ROUND(MIN(f.weeklysalesclean)::numeric, 2) AS ca_min,
+    ROUND(MAX(f.weeklysalesclean)::numeric, 2) AS ca_max
+FROM factsales f
+JOIN dimdate d ON f.date = d.date
+GROUP BY d.holidaylabel
+ORDER BY ca_moyen DESC;

@@ -1,0 +1,28 @@
+holidaylabel,holidayname,season,storetype,nb_obs,ca_moyen,ca_total
+Semaine fériée,Black Friday,Fall,A,2080,153562.66,319410324.0
+Semaine fériée,Christmas,Winter,A,2600,132928.44,345613948.0
+Semaine fériée,Independence Day,Summer,A,1560,87249.46,136109161.0
+Semaine fériée,Labor Day,Fall,A,1560,105732.53,164942751.0
+Semaine fériée,New Year,Winter,A,1560,99986.86,155979497.0
+Semaine fériée,Black Friday,Fall,B,1280,72382.72,92649877.0
+Semaine fériée,Christmas,Winter,B,1600,62409.24,99854789.0
+Semaine fériée,Independence Day,Summer,B,960,41940.72,40263088.0
+Semaine fériée,Labor Day,Fall,B,960,51837.36,49763868.0
+Semaine fériée,New Year,Winter,B,960,48585.14,46641732.0
+Semaine fériée,Black Friday,Fall,C,640,31140.77,19930096.0
+Semaine fériée,Christmas,Winter,C,800,26243.05,20994442.0
+Semaine fériée,Independence Day,Summer,C,480,18209.51,8740564.0
+Semaine fériée,Labor Day,Fall,C,480,21223.76,10187405.0
+Semaine fériée,New Year,Winter,C,480,20431.91,9807315.0
+Semaine normale,,Fall,A,16640,82601.38,1374487007.0
+Semaine normale,,Spring,A,20280,69582.09,1411124748.0
+Semaine normale,,Summer,A,19240,69920.25,1345265654.0
+Semaine normale,,Winter,A,15600,79620.49,1242079643.0
+Semaine normale,,Fall,B,10240,39640.69,405920698.0
+Semaine normale,,Spring,B,12480,33326.32,415912527.0
+Semaine normale,,Summer,B,11840,33178.0,392827561.0
+Semaine normale,,Winter,B,9600,38622.43,370775305.0
+Semaine normale,,Fall,C,5120,16842.83,86235309.0
+Semaine normale,,Spring,C,6240,14111.69,88056918.0
+Semaine normale,,Summer,C,5920,13943.86,82547661.0
+Semaine normale,,Winter,C,4800,16337.99,78422365.0
