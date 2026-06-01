@@ -14,7 +14,7 @@ retail_project/
 │   ├── 01_chargement_jointures.ipynb     ← Chargement, jointures, qualité
 │   ├── 02_eda_analyse.ipynb              ← EDA & segmentation
 │   ├── 03_sql_analyse.ipynb              ← Requêtes SQL avancées
-│   └── 04_dashboard_prep.ipynb          ← Export tables Power BI
+│   
 │
 ├── 🐍 scripts/
 │   ├── data_loader.py                   ← Chargement & jointures
@@ -22,9 +22,9 @@ retail_project/
 │   └── sql_helpers.py                   ← Connexion SQLite & requêtes
 │
 ├── 🗄️ sql/
-│   ├── 01_creation_tables.sql           ← Schéma étoile
-│   ├── 02_exploration.sql               ← Requêtes d'exploration
-│   └── 03_analyses_avancees.sql         ← GROUP BY, REGEX, WINDOW
+│   ├── 01_exploration.sql               ← Requêtes d'exploration
+│   ├── 02_analyses_avancees.sql         ← Requêtes d'exploration
+│   
 │
 ├── 📁 data/
 │   ├── raw/                             ← train.csv, stores.csv,
