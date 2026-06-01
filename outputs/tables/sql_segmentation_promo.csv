@@ -1,0 +1,10 @@
+segment_promo,storetype,nb_obs,ca_moyen,ca_total,markdown_moyen,vs_moyenne
+1 · Promo faible,A,2160,75190.67,162411857.0,4227.67,Au-dessus moyenne
+1 · Promo faible,B,1360,36967.19,50275382.0,4217.05,En-dessous moyenne
+1 · Promo faible,C,620,15769.65,9777181.0,4214.49,En-dessous moyenne
+2 · Promo modérée,A,73260,77050.74,5644737202.0,10542.31,Au-dessus moyenne
+2 · Promo modérée,B,44980,36988.21,1663729470.0,10443.83,En-dessous moyenne
+2 · Promo modérée,C,22340,15529.43,346927486.0,10385.99,En-dessous moyenne
+3 · Promo forte,A,5700,120677.84,687863673.0,24935.3,Au-dessus moyenne
+3 · Promo forte,B,3580,56034.8,200604594.0,25376.5,En-dessous moyenne
+3 · Promo forte,C,2000,24108.7,48217407.0,25327.92,En-dessous moyenne

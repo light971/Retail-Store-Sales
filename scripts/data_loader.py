@@ -1,149 +1,124 @@
-"""
-╔══════════════════════════════════════════════════════════════╗
-║           data_loader.py — Chargement des données           ║
-║  Fonctions utilitaires réutilisables entre vos notebooks    ║
-╚══════════════════════════════════════════════════════════════╝
-Utilisation dans un notebook :
-    import sys
-    sys.path.append('../scripts')
-    from data_loader import load_csv, quick_info
-"""
-
 import pandas as pd
 import numpy as np
 import os
 
+RAW_PATH       = os.path.join('..', 'data', 'raw')
+PROCESSED_PATH = os.path.join('..', 'data', 'processed')
+STAR_PATH      = os.path.join('..', 'data', 'star_schema')
 
-# ──────────────────────────────────────────────────────
-#  CHARGEMENT
-# ──────────────────────────────────────────────────────
 
-def load_csv(filepath: str, **kwargs) -> pd.DataFrame:
+def load_raw_files() -> dict:
+    """Charge les 4 fichiers CSV bruts."""
+    files = {
+        'train'   : 'train.csv',
+        'stores'  : 'stores.csv',
+        'features': 'features.csv',
+        'test'    : 'test.csv',
+    }
+    dfs = {}
+    for key, fname in files.items():
+        path = os.path.join(RAW_PATH, fname)
+        dfs[key] = pd.read_csv(path)
+        print(f'  ✅ {fname:<20} {dfs[key].shape[0]:>10,} lignes × {dfs[key].shape[1]} colonnes')
+    return dfs
+
+
+def build_master(train, stores, features) -> pd.DataFrame:
     """
-    Charge un fichier CSV avec gestion d'erreurs.
-    
-    Params:
-        filepath (str)  : Chemin vers le fichier .csv
-        **kwargs        : Arguments supplémentaires pour pd.read_csv
-    
-    Returns:
-        pd.DataFrame
+    Construit le dataset maître par jointures successives.
+    Jointure 1 : train  LEFT JOIN stores   ON Store
+    Jointure 2 : result LEFT JOIN features ON [Store, Date]
     """
-    if not os.path.exists(filepath):
-        raise FileNotFoundError(f"❌ Fichier introuvable : {filepath}")
-    df = pd.read_csv(filepath, **kwargs)
-    print(f"✅ '{os.path.basename(filepath)}' chargé — {df.shape[0]} lignes × {df.shape[1]} colonnes")
+    train['Date']    = pd.to_datetime(train['Date'])
+    features['Date'] = pd.to_datetime(features['Date'])
+
+    # Jointure 1
+    df = train.merge(stores, on='Store', how='left')
+    print(f'  ✅ train × stores    : {df.shape}')
+
+    # Jointure 2 — supprime IsHoliday dupliqué
+    features_clean = features.drop(columns=['IsHoliday'], errors='ignore')
+    df = df.merge(features_clean, on=['Store', 'Date'], how='left')
+    print(f'  ✅ × features        : {df.shape}')
+
     return df
 
 
-def load_excel(filepath: str, sheet_name=0, **kwargs) -> pd.DataFrame:
-    """Charge un fichier Excel."""
-    if not os.path.exists(filepath):
-        raise FileNotFoundError(f"❌ Fichier introuvable : {filepath}")
-    df = pd.read_excel(filepath, sheet_name=sheet_name, **kwargs)
-    print(f"✅ '{os.path.basename(filepath)}' chargé — {df.shape[0]} lignes × {df.shape[1]} colonnes")
+def enrich(df: pd.DataFrame) -> pd.DataFrame:
+    """Feature engineering métier."""
+    df = df.copy()
+
+    # Temporel
+    df['Year']    = df['Date'].dt.year
+    df['Month']   = df['Date'].dt.month
+    df['Week']    = df['Date'].dt.isocalendar().week.astype(int)
+    df['Quarter'] = df['Date'].dt.quarter
+    df['Month_Name'] = df['Date'].dt.strftime('%B')
+
+    # Catégorisation taille magasin
+    df['Size_Category'] = pd.cut(
+        df['Size'],
+        bins=[0, 80_000, 150_000, 999_999],
+        labels=['Small', 'Medium', 'Large']
+    )
+
+    # MarkDowns — COALESCE (NaN → 0), clip négatifs
+    md_cols = ['MarkDown1','MarkDown2','MarkDown3','MarkDown4','MarkDown5']
+    for col in md_cols:
+        if col in df.columns:
+            df[col] = df[col].fillna(0).clip(lower=0)
+    df['Total_MarkDown'] = df[[c for c in md_cols if c in df.columns]].sum(axis=1)
+    df['Has_MarkDown']   = (df['Total_MarkDown'] > 0).astype(int)
+
+    # Labels
+    df['Holiday_Label']      = np.where(df['IsHoliday'], 'Fériée', 'Normale')
+    df['Weekly_Sales_Clean'] = df['Weekly_Sales'].clip(lower=0)
+
     return df
 
 
-# ──────────────────────────────────────────────────────
-#  DIAGNOSTIC RAPIDE
-# ──────────────────────────────────────────────────────
+def build_star_schema(df: pd.DataFrame) -> dict:
+    """Construit et exporte les 5 tables du schéma en étoile."""
+    os.makedirs(STAR_PATH, exist_ok=True)
 
-def quick_info(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Affiche un rapport de qualité rapide du DataFrame.
-    
-    Returns:
-        pd.DataFrame : tableau récapitulatif par colonne
-    """
-    report = pd.DataFrame({
-        'type'       : df.dtypes,
-        'non_null'   : df.notnull().sum(),
-        'null'       : df.isnull().sum(),
-        'null_%'     : (df.isnull().sum() / len(df) * 100).round(2),
-        'uniques'    : df.nunique(),
-        'uniques_%'  : (df.nunique() / len(df) * 100).round(2),
-    })
-    
-    print(f"📐 Shape : {df.shape[0]} lignes × {df.shape[1]} colonnes")
-    print(f"🔁 Doublons : {df.duplicated().sum()}")
-    print(f"❓ Valeurs manquantes totales : {df.isnull().sum().sum()}")
-    print()
-    return report
+    fact = df[['Store','Dept','Date','Weekly_Sales','Weekly_Sales_Clean','IsHoliday']].copy()
+    fact.rename(columns={'Store':'Store_ID','Dept':'Dept_ID'}, inplace=True)
 
+    dim_date = (df[['Date','Year','Month','Month_Name','Week','Quarter','IsHoliday','Holiday_Label']]
+                  .drop_duplicates('Date').sort_values('Date').reset_index(drop=True))
 
-def missing_summary(df: pd.DataFrame) -> pd.DataFrame:
-    """Résumé des valeurs manquantes, trié par % décroissant."""
-    missing = pd.DataFrame({
-        'missing_count': df.isnull().sum(),
-        'missing_pct'  : (df.isnull().sum() / len(df) * 100).round(2),
-        'dtype'        : df.dtypes,
-    }).sort_values('missing_pct', ascending=False)
-    return missing[missing['missing_count'] > 0]
+    dim_store = (df[['Store','Type','Size','Size_Category']]
+                   .drop_duplicates('Store').sort_values('Store').reset_index(drop=True))
+    dim_store.rename(columns={'Store':'Store_ID'}, inplace=True)
+    dim_store['Store_Label'] = 'Store_' + dim_store['Store_ID'].astype(str).str.zfill(2)
 
+    dim_dept = (df[['Dept']].drop_duplicates().sort_values('Dept').reset_index(drop=True))
+    dim_dept.rename(columns={'Dept':'Dept_ID'}, inplace=True)
+    dim_dept['Dept_Label'] = 'Dept_' + dim_dept['Dept_ID'].astype(str).str.zfill(2)
 
-def outlier_summary(df: pd.DataFrame) -> pd.DataFrame:
-    """Détecte les outliers via la méthode IQR pour les colonnes numériques."""
-    num_cols = df.select_dtypes(include=np.number).columns
-    rows = []
-    for col in num_cols:
-        Q1, Q3 = df[col].quantile(0.25), df[col].quantile(0.75)
-        IQR = Q3 - Q1
-        lb, ub = Q1 - 1.5 * IQR, Q3 + 1.5 * IQR
-        n_out = ((df[col] < lb) | (df[col] > ub)).sum()
-        rows.append({
-            'colonne'     : col,
-            'outliers'    : n_out,
-            'outliers_%'  : round(n_out / len(df) * 100, 2),
-            'borne_basse' : round(lb, 2),
-            'borne_haute' : round(ub, 2),
-        })
-    return pd.DataFrame(rows).set_index('colonne').sort_values('outliers_%', ascending=False)
+    md_cols = [c for c in ['Store','Date','MarkDown1','MarkDown2','MarkDown3',
+                            'MarkDown4','MarkDown5','Total_MarkDown','Has_MarkDown'] if c in df.columns]
+    dim_md = df[md_cols].drop_duplicates(['Store','Date']).copy()
+    dim_md.rename(columns={'Store':'Store_ID'}, inplace=True)
+
+    tables = {
+        'FACT_SALES'  : fact,
+        'DIM_DATE'    : dim_date,
+        'DIM_STORE'   : dim_store,
+        'DIM_DEPT'    : dim_dept,
+        'DIM_MARKDOWN': dim_md,
+    }
+
+    for name, tbl in tables.items():
+        path = os.path.join(STAR_PATH, f'{name}.csv')
+        tbl.to_csv(path, index=False)
+        print(f'  ✅ {name:<18} {tbl.shape[0]:>10,} lignes → {path}')
+
+    return tables
 
 
-# ──────────────────────────────────────────────────────
-#  NETTOYAGE
-# ──────────────────────────────────────────────────────
-
-def impute_missing(df: pd.DataFrame, strategy: str = 'median') -> pd.DataFrame:
-    """
-    Impute les valeurs manquantes.
-    
-    Params:
-        df       : DataFrame à traiter
-        strategy : 'median', 'mean', ou 'mode'
-    
-    Returns:
-        pd.DataFrame nettoyé (copie)
-    """
-    df_clean = df.copy()
-    
-    for col in df_clean.select_dtypes(include=np.number).columns:
-        if df_clean[col].isnull().any():
-            if strategy == 'median':
-                val = df_clean[col].median()
-            elif strategy == 'mean':
-                val = df_clean[col].mean()
-            else:
-                val = df_clean[col].mode()[0]
-            df_clean[col].fillna(val, inplace=True)
-            print(f"  ✅ {col} → imputé par {strategy} ({val:.2f})")
-    
-    for col in df_clean.select_dtypes(include='object').columns:
-        if df_clean[col].isnull().any():
-            val = df_clean[col].mode()[0]
-            df_clean[col].fillna(val, inplace=True)
-            print(f"  ✅ {col} → imputé par mode ('{val}')")
-    
-    return df_clean
-
-
-# ──────────────────────────────────────────────────────
-#  EXPORT
-# ──────────────────────────────────────────────────────
-
-def save_clean(df: pd.DataFrame, output_path: str) -> None:
-    """Sauvegarde le DataFrame nettoyé en CSV."""
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    df.to_csv(output_path, index=False, encoding='utf-8')
-    print(f"💾 Dataset exporté → {output_path}  ({df.shape[0]} lignes)")
+def save_master(df: pd.DataFrame) -> None:
+    os.makedirs(PROCESSED_PATH, exist_ok=True)
+    path = os.path.join(PROCESSED_PATH, 'retail_master.csv')
+    df.to_csv(path, index=False)
+    print(f'  ✅ Dataset maître → {path}  ({df.shape[0]:,} lignes × {df.shape[1]} col.)')
