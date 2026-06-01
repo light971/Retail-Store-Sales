@@ -37,8 +37,8 @@ retail_project/
 │   └── tables/                          ← Agrégats Power BI (.csv)
 │
 └── 📋 reports/
-    ├── DAX_PowerBI.md                   ← Mesures DAX
-    └── Guide_MiseEnPage_PowerBI.md      ← Layout dashboard
+    ├── Dashboard.pbi                  ← Dashboard Power BI
+    
 ```
 
 ---
