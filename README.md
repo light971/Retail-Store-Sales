@@ -68,7 +68,7 @@ retail_project/
 
 | Domaine | Outils |
 |--------|--------|
-| Langage | Python 3.11 |
+| Langage | Python 3.12.7 |
 | Manipulation données | Pandas, NumPy |
 | SQL | PostgrSQL |
 | Visualisation | Matplotlib, Seaborn |
