@@ -1,0 +1,14 @@
+# Data Analyse & Manipulation
+pandas
+numpy
+
+# Base de données (PostgreSQL)
+psycopg2-binary
+sqlalchemy
+
+# Visualisation (Notebooks & Scripts)
+matplotlib
+seaborn
+
+# Utilitaires pour les Notebooks
+ipykernel
