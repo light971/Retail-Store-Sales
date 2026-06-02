@@ -10,34 +10,34 @@
 ```
 retail_project/
 │
-├── 📓 notebooks/
-│   ├── 01_chargement_jointures.ipynb     ← Chargement, jointures, qualité
-│   ├── 02_eda_analyse.ipynb              ← EDA & segmentation
-│   ├── 03_sql_analyse.ipynb              ← Requêtes SQL avancées
-│   └── 04_dashboard_prep.ipynb           ← Préparation powerBI
-│
-├── 🐍 scripts/
-│   ├── data_loader.py                   ← Chargement & jointures
-│   ├── viz_helpers.py                   ← Visualisations réutilisables
-│   └── sql_helpers.py                   ← Connexion PostgrSQL & requêtes
-│
-├── 🗄️ sql/
-│   ├── 01_exploration.sql               ← Requêtes d'exploration
-│   ├── 02_analyses_avancees.sql         ← Requêtes d'exploration
-│   
-│
 ├── 📁 data/
-│   ├── raw/                             ← train.csv, stores.csv,
-│   │                                       features.csv, test.csv
-│   ├── processed/                       ← Données nettoyées & enrichies
-│   └── star_schema/                     ← Tables du schéma étoile
+│   ├── 📁 raw/                 # Fichiers sources (train.csv, stores.csv, features.csv, test.csv)
+│   ├── 📁 processed/           # Données nettoyées, jointes et enrichies
+│   └── 📁 star_schema/         # Tables dimensionnelles et de faits prêtes pour l'analyse
+│
+├── 📓 notebooks/
+│   ├── 📄 01_chargement_jointures.ipynb  # Qualité des données, jointures et cleaning
+│   ├── 📄 02_eda_analyse.ipynb          # Analyse exploratoire (EDA) & segmentation clients
+│   ├── 📄 03_sql_analyse.ipynb          # Prototypage et requêtes SQL avancées
+│   └── 📄 04_dashboard_prep.ipynb       # Préparation et agrégation des données pour Power BI
 │
 ├── 📤 outputs/
-│   ├── figures/                         ← Graphiques exportés (.png)
-│   ├──tables/                           ← Agrégats Power BI (.csv)
-│   └── powerbi/                         ← Données exportées & Dashboard Power BI
-|                         
-└──    
+│   ├── 📁 figures/             # Graphiques et visualisations exportés (.png, .jpeg)
+│   ├── 📁 tables/              # Extractions et KPIs intermédiaires (.csv)
+│   └── 📁 powerbi/             # Fichier rapport (.pbix) et exports spécifiques
+│
+├── 🐍 scripts/
+│   ├── 📄 data_loader.py       # Fonctions de chargement et pipeline de nettoyage
+│   ├── 📄 sql_helpers.py       # Gestion de la connexion PostgreSQL & exécution des requêtes
+│   └── 📄 viz_helpers.py       # Fonctions de visualisation réutilisables
+│
+├── 🗄️ sql/
+│   ├── 📄 01_exploration.sql   # Requêtes de découverte et statistiques descriptives
+│   └── 📄 02_analyses_avancees.sql # Calcul des KPIs complexes et vues analytiques
+│
+├── ⚙️ .gitignore               # Exclusion des gros volumes de données (data/) et des credentials
+├── 📝 README.md                # Présentation du projet, installation et cas d'usage
+└── 📋 requirements.txt         # Dépendances Python (pandas, psycopg2, matplotlib...)
 ```
 
 ---
