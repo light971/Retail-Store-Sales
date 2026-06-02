@@ -14,12 +14,12 @@ retail_project/
 │   ├── 01_chargement_jointures.ipynb     ← Chargement, jointures, qualité
 │   ├── 02_eda_analyse.ipynb              ← EDA & segmentation
 │   ├── 03_sql_analyse.ipynb              ← Requêtes SQL avancées
-│   
+│   └── 04_dashboard_prep.ipynb           ← Préparation powerBI
 │
 ├── 🐍 scripts/
 │   ├── data_loader.py                   ← Chargement & jointures
 │   ├── viz_helpers.py                   ← Visualisations réutilisables
-│   └── sql_helpers.py                   ← Connexion SQLite & requêtes
+│   └── sql_helpers.py                   ← Connexion PostgrSQL & requêtes
 │
 ├── 🗄️ sql/
 │   ├── 01_exploration.sql               ← Requêtes d'exploration
@@ -34,11 +34,10 @@ retail_project/
 │
 ├── 📤 outputs/
 │   ├── figures/                         ← Graphiques exportés (.png)
-│   └── tables/                          ← Agrégats Power BI (.csv)
-│
-└── 📋 reports/
-    ├── Dashboard.pbi                  ← Dashboard Power BI
-    
+│   ├──tables/                           ← Agrégats Power BI (.csv)
+│   └── powerbi/                         ← Données exportées & Dashboard Power BI
+|                         
+└──    
 ```
 
 ---
