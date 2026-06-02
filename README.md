@@ -1,4 +1,4 @@
-# 📊 Retail Store Sales — Analyse Marketing Data
+# Retail Store Sales — Analyse Marketing Data
 ## Optimisation des ventes hebdomadaires par magasin, département et période promotionnelle
 
 > **Problématique** : Comment identifier les leviers d'optimisation des ventes hebdomadaires par magasin et département, en mesurant l'impact des promotions (markdowns), des périodes de fêtes et du type de magasin sur le chiffre d'affaires ?
@@ -53,7 +53,7 @@ retail_project/
 
 ---
 
-## ⭐ Schéma en étoile Power BI
+## Schéma en étoile Power BI
 
 ```
           DIM_DATE ──────────────────────┐
@@ -71,14 +71,14 @@ retail_project/
 |--------|--------|
 | Langage | Python 3.11 |
 | Manipulation données | Pandas, NumPy |
-| SQL | SQLite (via sqlite3) |
+| SQL | PostgrSQL |
 | Visualisation | Matplotlib, Seaborn |
 | Dashboard | Power BI |
 | Environnement | VS Code + Jupyter |
 
 ---
 
-## ▶️ Lancer le projet
+## Lancer le projet
 
 ```bash
 git clone https://github.com/light971/retail-sales-analysis.git
