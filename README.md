@@ -82,8 +82,8 @@ Retail-Store-Sales/
 ## Lancer le projet
 
 ```bash
-git clone https://github.com/light971/retail-sales-analysis.git
-cd retail-sales-analysis
+git clone https://github.com/light971/Retail-Store-Sales.git
+cd Retail-Store-Sales
 pip install -r requirements.txt
 jupyter notebook notebooks/01_chargement_jointures.ipynb
 ```
