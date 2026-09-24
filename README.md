@@ -73,7 +73,7 @@ Retail-Store-Sales/
 |---|---|---|
 | Concentration du CA | Les 10 premiers magasins (20 % du parc) réalisent **33 %** du CA. Tous sont de type A et de grande taille | Prioriser ces magasins pour les tests d'optimisation |
 | Type de magasin | Les magasins de type A (52 % du parc) génèrent **74 %** du CA, avec un CA moyen **~5 fois** supérieur au type C (80 067 € vs 16 223 €/semaine/département) | L'écart suit la taille des magasins : le levier est la surface, pas le type seul |
-| Effet des fêtes | Les semaines fériées affichent un CA moyen supérieur de **+60 %** aux semaines normales (84 494 € vs 52 853 €) | Anticiper stocks et effectifs sur les semaines fériées |
+| Effet des fêtes | Les semaines fériées affichent un CA moyen supérieur de **+60 %** en moyenne, mais avec de fortes disparités : **Black Friday +104 %**, Noël +77 %, Labor Day +42 %, Nouvel An +34 %, Independence Day seulement +17 % | Concentrer stocks, effectifs et budget marketing sur Black Friday et Noël |
 | Saisonnalité | Novembre est le meilleur mois (**+30 %** vs la moyenne), mai le plus faible. Le T4 surperforme chaque année | Préparer le pic de fin d'année dès octobre |
 | Impact des promotions | Seules les semaines à **promo forte (>20 k€)** montrent un CA supérieur de **+52 à +57 %** selon le type. Entre promo faible et modérée, aucun écart notable | Concentrer le budget promo sur moins de semaines, avec des démarques plus fortes |
 | Segmentation | Les magasins sont répartis en 3 terciles de performance (Top / Mid / Low). Le Top performer est dominé par les grands magasins de type A | Adapter les actions (assortiment, promos) par tercile |
@@ -81,7 +81,7 @@ Retail-Store-Sales/
 ## 💡 Recommandations
 
 1. **Concentrer les investissements sur les 20 grands magasins de type A** : ils représentent 40 % du parc pour 60 % du CA.
-2. **Préparer le T4 dès octobre** : novembre et les semaines fériées portent les plus forts CA de l'année (+30 % et +60 %).
+2.  **Faire de Black Friday et Noël les deux temps forts de l'année** : ces deux semaines génèrent respectivement +104 % et +77 % de CA par rapport à une semaine normale. La préparation (stocks, renforts, campagnes) doit démarrer dès octobre. À l'inverse, l'Independence Day (+17 %) ne justifie pas de dispositif spécifique.
 3. **Revoir la stratégie de démarque** : sous 20 k€, les promotions ne sont pas associées à une hausse des ventes. Mieux vaut moins de semaines promo, mais plus fortes, à valider par un test A/B.
 4. **Auditer les magasins de type C** : 8 magasins pour moins de 5 % du CA. Une analyse de rentabilité (coûts non disponibles ici) dirait s'il faut revoir l'assortiment ou le format.
 
