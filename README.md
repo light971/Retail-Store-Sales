@@ -75,14 +75,14 @@ Retail-Store-Sales/
 | Type de magasin | Les magasins de type A (52 % du parc) génèrent **74 %** du CA, avec un CA moyen **~5 fois** supérieur au type C (80 067 € vs 16 223 €/semaine/département) | L'écart suit la taille des magasins : le levier est la surface, pas le type seul |
 | Effet des fêtes | Les semaines fériées affichent un CA moyen supérieur de **+60 %** en moyenne, mais avec de fortes disparités : **Black Friday +104 %**, Noël +77 %, Labor Day +42 %, Nouvel An +34 %, Independence Day seulement +17 % | Concentrer stocks, effectifs et budget marketing sur Black Friday et Noël |
 | Saisonnalité | Novembre est le meilleur mois (**+30 %** vs la moyenne), mai le plus faible. Le T4 surperforme chaque année | Préparer le pic de fin d'année dès octobre |
-| Impact des promotions | Seules les semaines à **promo forte (>20 k€)** montrent un CA supérieur de **+52 à +57 %** selon le type. Entre promo faible et modérée, aucun écart notable | Concentrer le budget promo sur moins de semaines, avec des démarques plus fortes |
+| Impact des promotions | Aucun effet mesurable de l'intensité promotionnelle à calendrier égal : en semaine fériée, promo forte (83 040 €) ≈ promo modérée (86 935 €) ; en semaine normale, promo faible (53 735 €) ≈ promo modérée (52 825 €). La hausse apparente des promos fortes s'explique par le calendrier, car elles ne sont appliquées que pendant les fêtes | Le budget de démarque ne semble pas générer de ventes additionnelles : à tester |
 | Segmentation | Les magasins sont répartis en 3 terciles de performance (Top / Mid / Low). Le Top performer est dominé par les grands magasins de type A | Adapter les actions (assortiment, promos) par tercile |
 
 ## 💡 Recommandations
 
 1. **Concentrer les investissements sur les 20 grands magasins de type A** : ils représentent 40 % du parc pour 60 % du CA.
 2.  **Faire de Black Friday et Noël les deux temps forts de l'année** : ces deux semaines génèrent respectivement +104 % et +77 % de CA par rapport à une semaine normale. La préparation (stocks, renforts, campagnes) doit démarrer dès octobre. À l'inverse, l'Independence Day (+17 %) ne justifie pas de dispositif spécifique.
-3. **Revoir la stratégie de démarque** : sous 20 k€, les promotions ne sont pas associées à une hausse des ventes. Mieux vaut moins de semaines promo, mais plus fortes, à valider par un test A/B.
+3. **Remettre en question le budget de démarque** : à calendrier égal, augmenter l'intensité des promotions n'est associé à aucune hausse du CA. Les fêtes génèrent le pic de ventes, pas les promos. Avant de réduire ce budget, lancer un test contrôlé (promo forte hors période fériée sur un groupe de magasins, comparé à un groupe témoin) pour mesurer l'effet réel.
 4. **Auditer les magasins de type C** : 8 magasins pour moins de 5 % du CA. Une analyse de rentabilité (coûts non disponibles ici) dirait s'il faut revoir l'assortiment ou le format.
 
 ## 📈 Visualisations
@@ -93,7 +93,7 @@ Retail-Store-Sales/
 ## ⚠️ Limites
 
 - **Pas de semaine sans promotion** : 100 % des semaines ont un MarkDown actif. On ne peut donc pas mesurer l'effet « promo vs pas de promo », seulement l'effet de l'intensité.
-- **Corrélation ≠ causalité** : les semaines à promo forte peuvent coïncider avec les fêtes. L'effet promo et l'effet calendrier ne sont pas isolés.
+- **Promotions et calendrier confondus** : les promos fortes n'ont été appliquées que pendant les fêtes, ce qui empêche d'isoler leur effet propre. L'analyse compare donc les niveaux de promo à calendrier égal.
 - **Dataset synthétique** (Kaggle) : les conclusions illustrent une méthode d'analyse, pas un cas réel.
 - **Pas de données de coûts** : l'analyse porte sur le CA, pas sur la marge.
 ---
