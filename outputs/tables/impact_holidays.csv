@@ -1,5 +1,6 @@
-Événement,CA moyen,Lift vs normale (%)
-Super Bowl,,
-Labor Day,,
-Thanksgiving,,
-Christmas,,
+holidayname,ca_moyen,lift_vs_normale_pct
+Black Friday,107997.57,104.3
+Christmas,93292.64,76.5
+Labor Day,74964.67,41.8
+New Year,70809.51,34.0
+Independence Day,61704.27,16.7
