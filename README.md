@@ -64,6 +64,7 @@ Retail-Store-Sales/
           DIM_DEPT ──────────┘
 ```
 
+
 ---
 
 ## 🛠️ Stack technique
